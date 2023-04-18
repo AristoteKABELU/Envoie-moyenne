@@ -24,4 +24,14 @@ HTML;
    }
     return $tableau."</table>";
 }  
+
+    public static function toMail(string $matricule){
+        if (!empty($matricule)) {
+            $matricule.='@esisalama.org';
+            
+            return $matricule;
+        }
+        return null;
+    }
+    
 }

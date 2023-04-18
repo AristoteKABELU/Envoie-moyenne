@@ -10,12 +10,39 @@ $students = new Evaluation();
 $listStudentsIdentities['identity'] = $students->getStudentsIdentities();
 $listStudentsIdentities['evaluation'] = $students->getStudentsEvaluations();
 
-//echo PreparatingMail::toHTML($listStudentsIdentities['identity'][57], $listStudentsIdentities['evaluation'][57]);
-//echo '<pre>';var_dump($listStudentsIdentities['identity'][32], $listStudentsIdentities['evaluation'][32]); echo '</pre>';
+//$listIndice = [32, 29, 39, 14, 24, 23, 163];
 
-$sendMail = new PHPMaillerStudent('smtp.gmail.com', 'Aristotekabeluson@gmail.com', 'adrhlnwbbfusukhf');
-$sendMail->settingSMTP();
-$sendMail->addMail('20kk083@esisalama.org');
-$sendMail->Setcontent('Moyenne AS',
-                    PreparatingMail::toHTML($listStudentsIdentities['identity'][29], $listStudentsIdentities['evaluation'][29]));
-$sendMail->sendMail();
+//$listIndice = [46, 58, 57, 32];
+
+try{
+    $sendMail = new PHPMaillerStudent('smtp.gmail.com', 'Aristotekabeluson@gmail.com', 'adrhlnwbbfusukhf');
+    $sendMail->settingSMTP();
+
+    /* for ($i=0; $i < sizeof($listStudentsIdentities['identity']); $i++) {
+
+        $html = PreparatingMail::toHTML($listStudentsIdentities['identity'][$i], $listStudentsIdentities['evaluation'][$i]);
+        $mail = PreparatingMail::toMail($listStudentsIdentities['identity'][$i]->matricule);
+        
+        if ($mail) {
+            $sendMail->addMail($mail)
+                ->Setcontent('Moyenne AS', $html);
+            echo $html;
+        }     
+    } */
+
+    foreach ($listIndice as $i) {
+        $html = PreparatingMail::toHTML($listStudentsIdentities['identity'][$i], $listStudentsIdentities['evaluation'][$i]);
+        $mail = PreparatingMail::toMail($listStudentsIdentities['identity'][$i]->matricule);
+        
+        if ($mail) {
+            $sendMail->addMail($mail)
+                ->Setcontent('Moyenne AS', $html)->sendMail();
+
+        } 
+    }
+    
+    echo 'Mails envoyé !';
+
+} catch(Exception $e) {
+    echo "Erreur: Envoie {$sendMail->getError()}";
+}

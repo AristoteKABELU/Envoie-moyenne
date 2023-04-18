@@ -37,22 +37,14 @@ class PHPMaillerStudent
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $this->mail->Port       = 465; 
 
+        return $this;
     }
 
     public function addMail(string $mail)
     {
         $this->mail->addAddress($mail);
-    }
-
-    public function sendMail()
-    {
-        try{
-            $this->mail->send();
-            echo 'Success';
-        } catch(Exception $e) {
-            echo "Erreur d'envoie: {$this->mail->ErrorInfo}";
-        }
         
+        return $this;
     }
 
     public function Setcontent(string $subject, string $message, $html = true)
@@ -63,6 +55,18 @@ class PHPMaillerStudent
 
         $this->mail->Subject = $subject;
         $this->mail->Body = $message;
+
+        return $this;
+    }
+
+    public function sendMail()
+    {
+        $this->mail->send();
+    }
+
+    public function getError()
+    {
+        return $this->mail->ErrorInfo;
     }
 
 }
