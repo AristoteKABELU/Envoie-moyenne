@@ -1,0 +1,20 @@
+{
+    "name": "kabelu/publipostage",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aristote KABELU",
+            "email": "20kk090@esisalama.org",
+            "name": "Glory MUSHOTA",
+            "email": "20km121@esisalama.org"
+        }
+    ],
+    
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
+}

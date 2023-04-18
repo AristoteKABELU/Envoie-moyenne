@@ -1,6 +1,6 @@
 <?php
 
-namespace App\src;
+namespace App\Entity;
 
 use App\Entity\Student;
 use \PDO;
@@ -23,7 +23,7 @@ class Evaluation extends Student
 }*/
 class Evaluation extends Student
 {
-    public function getEvaluation()
+    public function getStudentsEvaluations()
     {
         $statement = $this->connexion
                     ->prepare('SELECT `int 1/26`,`td /5` ,`td /15` ,
@@ -32,8 +32,8 @@ class Evaluation extends Student
                     FROM t_moyenne ' );
 
     $statement->execute();
+    
     return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
 }

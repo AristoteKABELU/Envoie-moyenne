@@ -21,6 +21,7 @@ namespace App\Entity;
 }*/
 class Student
 {
+
     protected $connexion;
     
     public function __construct()
@@ -28,11 +29,12 @@ class Student
         $this->connexion = new \PDO('mysql:host=localhost;dbname=moyenne_as', 'root', '');
     }
 
-    public function getStudent()
+    public function getStudentsIdentities()
     {
-        $statement = $this->connexion->prepare('SELECT nom, postnom, prenom, matricule FROM t_moyenne');
-
+        $statement = $this->connexion->prepare('SELECT nom, postnom, prenom, matricule 
+                                                FROM t_moyenne');
         $statement->execute();
+
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
 }

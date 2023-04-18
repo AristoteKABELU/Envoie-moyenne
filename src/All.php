@@ -3,46 +3,47 @@
 namespace App\src;
 
 use App\Entity\Student;
-use App\src\Evaluation;
+use App\Entity\Evaluation;
 
 require('../src/Entity/Student.php');
 require('../src/Entity/Evaluation.php');
 
+//Instaciation of class [Evaluation]
 $student = new Evaluation();
-$identity = $student->getStudent();
-$evaluations = $student->getEvaluation();
 
-$lisTStudents['identity'] = $identity;
-$lisTStudents['evaluations'] = $evaluations;
+$listStudents['student'] = $student->getStudent();
+$listStudents['evaluation'] = $student->getEvaluation();;
 
 
 
 function toHTML($student, $evaluation) 
 {
-    $identity=
-<<<HTML
-    <p> Bonjour  {$student->nom} {$student->postnom} {$student->prenom}
-HTML;
-
     $tableau =
 <<<HTML
-    <table border="1px">
+    <p> Bonjour  {$student->nom} {$student->postnom} {$student->prenom} </p>
+    <table border='1px'>
 HTML;
 
-   $elements = '';
    foreach ($evaluation as $key => $element) {
-    $elements.=
+    $tableau.=
 <<<HTML
     <tr>
         <td>{$key}</td>
         <td>{$element}</td>
     </tr>
-    <br>
 HTML;
    }
-
-    return $identity.$tableau.$elements;
-
+    return $tableau."</table>";
 }
+
+
+function displayTableStudent($listStudents) 
+{
+    for ($i=0; $i < sizeof($listStudents['student']); $i++) {
+        echo toHTML($listStudents['student'][$i], $listStudents['evaluation'][$i]);
+    }
+}
+
+//echo toHTML($listStudents['student'][32], $listStudents['evaluation'][32])
 
 ?>
