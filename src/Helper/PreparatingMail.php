@@ -14,6 +14,8 @@ class PreparatingMail
 HTML;
 
    foreach ($evaluation as $key => $element) {
+
+    $element = $element??'';
     $tableau.=
 <<<HTML
     <tr>

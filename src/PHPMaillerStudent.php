@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 
 
 
-class PHPMaillerStudent
+class PHPMaillerStudent extends PHPMailer
 {
     private $mail;
     private $host;
@@ -20,7 +20,7 @@ class PHPMaillerStudent
 
     public function __construct(string $host, string $username, string $password)
     {
-        $this->mail = new PHPMailer(true);
+        $this->exceptions = true;
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
@@ -28,35 +28,34 @@ class PHPMaillerStudent
 
     public function settingSMTP()
     {
-        $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
-        $this->mail->isSMTP();                                            //Send using SMTP
-        $this->mail->Host       = $this->host;                     //Set the SMTP server to send through
-        $this->mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $this->mail->Username   = $this->username;                     //SMTP username
-        $this->mail->Password   = $this->password;                               //SMTP password
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $this->mail->Port       = 465; 
+        $this->SMTPDebug = SMTP::DEBUG_OFF;
+        $this->isSMTP();                                            //Send using SMTP
+        $this->Host       = $this->host;                     //Set the SMTP server to send through
+        $this->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $this->Username   = $this->username;                     //SMTP username
+        $this->Password   = $this->password;                               //SMTP password
+        $this->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $this->Port       = 465; 
 
         return $this;
     }
 
-    public function addMail(string $mail)
+
+    public function getReply()
+    {
+        var_dump($this->ReplyTo);
+    }
+
+    /* public function addAddress(string $mail)
     {
         $this->mail->addAddress($mail);
         
         return $this;
-    }
+    } 
 
-    public function Setcontent(string $subject, string $message, $html = true)
+    public function removeAddress()
     {
-        if ($html) {
-            $this->mail->isHTML(true);
-        }
-
-        $this->mail->Subject = $subject;
-        $this->mail->Body = $message;
-
-        return $this;
+        $this->mail->clearReplyTos();
     }
 
     public function sendMail()
@@ -67,6 +66,19 @@ class PHPMaillerStudent
     public function getError()
     {
         return $this->mail->ErrorInfo;
+    }
+    */
+
+    public function Setcontent(string $subject, string $message, $html = true)
+    {
+        if ($html) {
+            $this->isHTML(true);
+        }
+
+        $this->Subject = $subject;
+        $this->Body = $message;
+
+        return $this;
     }
 
 }
