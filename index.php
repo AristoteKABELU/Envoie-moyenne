@@ -7,14 +7,12 @@ use App\Helper\PreparatingMail;
 use App\PHPMaillerStudent;
 
 $students = new Student();
-$students = $students->getStudentsIdentities('t_moyenne_physique');
+$students = $students->getStudentsIdentities('t_moyenne_sql');
 
-//$listIndice = [32, 29, 39, 14, 24, 23, 163];
-
-$listIndice = [91];
+$listIndice = [57, 29];
 
 try{
-    $sendMail = new PHPMaillerStudent('smtp.gmail.com', 'Aristotekabeluson@gmail.com', 'adrhlnwbbfusukhf');
+    $sendMail = new PHPMaillerStudent('smtp.gmail.com', '20kk090@esisalama.org', 'bypmqlclcfmtithc');
     $sendMail->settingSMTP();
 
 

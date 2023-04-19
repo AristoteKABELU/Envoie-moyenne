@@ -19,17 +19,23 @@ $preparating = new PreparatingMail(['NOM', 'PRENOM', 'POSTNOM', 'ID', 'G.', 'MAT
 #Title of mail
 $subject = 'Moyenne SQL';
 
+
+
 try{
+    #PHPMaillerStudent($Host, $Username, $Password)
     $sendMail = new PHPMaillerStudent('smtp.gmail.com', '20kk090@esisalama.org', 'bypmqlclcfmtithc');
     $sendMail->settingSMTP();
+    $sendMail->setFrom('20kk090@esisalama.org', 'Moyenne L3 AS');
+    //$sendMail->addReplyTo('20kk090@esisalama.org');
 
     for ($idStudent=0; $idStudent < sizeof($students); $idStudent++) {
 
-        if ($idStudent == 57 || $idStudent == 56) {
-
+        if ($idStudent == 57 || $idStudent == 56 ) {
+            #Creat table of one student
             $html = $preparating->toHTML($students[$idStudent], $students[$idStudent]);
             $mail = $preparating->toMail($students[$idStudent]->MATRICULE);
 
+            #mail valide
             if ($mail) {
                 $sendMail->addAddress($mail);
                 $sendMail->Setcontent($subject, $html);
@@ -37,11 +43,10 @@ try{
                 $sendMail->clearAddresses();
             }
         }
-
             
     }
 
-    echo 'Mails envoyé !';
+    echo "Mails envoyé!";
 
 } catch(Exception $e) {
     echo "Erreur: Envoie {$sendMail->ErrorInfo}";
