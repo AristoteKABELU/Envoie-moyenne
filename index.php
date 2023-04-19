@@ -7,11 +7,11 @@ use App\Helper\PreparatingMail;
 use App\PHPMaillerStudent;
 
 $students = new Student();
-$students = $students->getStudentsIdentities('t_moyenne_sql');
+$students = $students->getStudentsIdentities('t_moyenne_physique');
 
 //$listIndice = [32, 29, 39, 14, 24, 23, 163];
 
-$listIndice = [31];
+$listIndice = [91];
 
 try{
     $sendMail = new PHPMaillerStudent('smtp.gmail.com', 'Aristotekabeluson@gmail.com', 'adrhlnwbbfusukhf');
@@ -34,14 +34,14 @@ try{
 
     //Boucle d'essaie sur une liste limité des personnes!
     foreach ($listIndice as $idStudent) {
-
-        $preparating = new PreparatingMail(['NOM', 'PRENOM', 'POSTNOM', 'ID', 'G.', 'MATRICULE']);
+        
+        $preparating = new PreparatingMail(['NOM', 'PRENOM', 'POSTNOM', 'ID', 'GENRE', 'MATRICULE']);
         $html = $preparating->toHTML($students[$idStudent], $students[$idStudent]);
         $mail = $preparating->toMail($students[$idStudent]->MATRICULE);
 
         if ($mail) {
             $sendMail->addAddress($mail);
-            $sendMail->Setcontent('Moyenne SQL', $html);
+            $sendMail->Setcontent('Moyenne Physique Prepa 2021', $html);
             $sendMail->send();
             $sendMail->clearAddresses();
         }

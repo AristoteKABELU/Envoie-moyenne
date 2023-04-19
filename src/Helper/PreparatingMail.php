@@ -13,7 +13,8 @@ class PreparatingMail
     {
     $tableau =
 <<<HTML
-    <p> Bonjour  {$student->NOM} {$student->POSTNOM} {$student->PRENOM} </p>
+    <p> Bonjour  <strong> {$student->NOM} {$student->POSTNOM} {$student->PRENOM} </strong>.</p><br>
+
     <table border='1'>
 HTML;
 
@@ -28,7 +29,8 @@ HTML;
         <td>{$student->$key}</td>
     </tr>
 HTML;
-    }    
+    } 
+
 }
     return $tableau."</table>";
     }  
