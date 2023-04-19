@@ -4,30 +4,36 @@ namespace App\Helper;
 
 class PreparatingMail 
 {
+    public function __construct(private array $listColumnExclude)
+    {
+        
+    }
 
-    public static function toHTML($student, $evaluation) 
-{
+    public  function toHTML($student, $evaluation) 
+    {
     $tableau =
 <<<HTML
-    <p> Bonjour  {$student->nom} {$student->postnom} {$student->prenom} </p>
-    <table border='1px'>
+    <p> Bonjour  {$student->NOM} {$student->POSTNOM} {$student->PRENOM} </p>
+    <table border='1'>
 HTML;
 
    foreach ($evaluation as $key => $element) {
 
-    $element = $element??'';
-    $tableau.=
+    if (!in_array($key, $this->listColumnExclude)) {
+        $element = $element??'';
+        $tableau.=
 <<<HTML
     <tr>
         <td>{$key}</td>
-        <td>{$element}</td>
+        <td>{$student->$key}</td>
     </tr>
 HTML;
-   }
+    }    
+}
     return $tableau."</table>";
-}  
+    }  
 
-    public static function toMail(string $matricule){
+    public function toMail(string $matricule){
         if (!empty($matricule)) {
             $matricule.='@esisalama.org';
             

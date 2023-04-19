@@ -2,17 +2,16 @@
 
 require 'vendor/autoload.php';
 
-use App\Entity\Evaluation;
+use App\Entity\Student;
 use App\Helper\PreparatingMail;
 use App\PHPMaillerStudent;
 
-$students = new Evaluation();
-$listStudentsIdentities['identity'] = $students->getStudentsIdentities();
-$listStudentsIdentities['evaluation'] = $students->getStudentsEvaluations();
+$students = new Student();
+$students = $students->getStudentsIdentities('t_moyenne_sql');
 
 //$listIndice = [32, 29, 39, 14, 24, 23, 163];
 
-$listIndice = [];
+$listIndice = [31];
 
 try{
     $sendMail = new PHPMaillerStudent('smtp.gmail.com', 'Aristotekabeluson@gmail.com', 'adrhlnwbbfusukhf');
@@ -20,7 +19,7 @@ try{
 
 
     //Boucle qui envoie a tout les etudiants
-    /* for ($i=0; $i < sizeof($listStudentsIdentities['identity']); $i++) {
+   /*  for ($i=0; $i < sizeof($listStudentsIdentities['identity']); $i++) {
 
         $html = PreparatingMail::toHTML($listStudentsIdentities['identity'][$i], $listStudentsIdentities['evaluation'][$i]);
         $mail = PreparatingMail::toMail($listStudentsIdentities['identity'][$i]->matricule);
@@ -33,17 +32,16 @@ try{
         }     
     } */
 
-
     //Boucle d'essaie sur une liste limité des personnes!
-    foreach ($listIndice as $i) {
-        $html = PreparatingMail::toHTML($listStudentsIdentities['identity'][$i], $listStudentsIdentities['evaluation'][$i]);
-        $mail = PreparatingMail::toMail($listStudentsIdentities['identity'][$i]->matricule);
-        
-        echo $html;
+    foreach ($listIndice as $idStudent) {
+
+        $preparating = new PreparatingMail(['NOM', 'PRENOM', 'POSTNOM', 'ID', 'G.', 'MATRICULE']);
+        $html = $preparating->toHTML($students[$idStudent], $students[$idStudent]);
+        $mail = $preparating->toMail($students[$idStudent]->MATRICULE);
 
         if ($mail) {
             $sendMail->addAddress($mail);
-            $sendMail->Setcontent('Moyenne AS', $html);
+            $sendMail->Setcontent('Moyenne SQL', $html);
             $sendMail->send();
             $sendMail->clearAddresses();
         }

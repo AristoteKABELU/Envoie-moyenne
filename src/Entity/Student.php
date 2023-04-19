@@ -29,10 +29,9 @@ class Student
         $this->connexion = new \PDO('mysql:host=localhost;dbname=moyenne_as', 'root', '');
     }
 
-    public function getStudentsIdentities()
+    public function getStudentsIdentities(string $table)
     {
-        $statement = $this->connexion->prepare('SELECT nom, postnom, prenom, matricule 
-                                                FROM t_moyenne');
+        $statement = $this->connexion->prepare('SELECT * FROM'.' '.$table);
         $statement->execute();
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);

@@ -1,26 +1,20 @@
-create table t_moyenne(
+create table t_moyenne_sql(
     id int not null primary key,
     matricule varchar(7),
     nom varchar(15) not null,
     postnom varchar(15) not null,
     prenom varchar(15) not null,
     genre char(1),
-    `int 1/26` null float,
-    `td /5` null float,
-    `td /15` null float,
-    `bon` null  float,
-    `int` null float,
-    `int.3 /10` null float,
-    `bon /3` null float,
-    `bon /2` null float,
-    `INT /7` null float,
-    `TDs /2` null float,
-    `BON /1` null float,
+    `int 1/26` float null,
+    `td /5` float null,
+    `td /15` float null,
+    `bon`  float null,
+    `int` float null,
+    `int.3 /10` float null,
+    `bon /3` float null,
+    `bon /2` float null,
+    `INT /7` float null,
+    `TDs /2` float null,
+    `BON /1` float null,
     `Moyenne /10` int
 );
-
-load data local infile 'C:/Users/KABELU/Desktop/AS.csv'
-into table moyenne_as.t_moyenne
-fields terminated by ';'
-enclosed by ''
-lines terminated by '\r\n';
