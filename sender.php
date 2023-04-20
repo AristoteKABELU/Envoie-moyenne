@@ -5,6 +5,8 @@ require 'vendor/autoload.php';
 use App\Entity\Student;
 use App\Helper\PreparatingMail;
 use App\PHPMaillerStudent;
+use App\Helper\TimeRunning;
+
 
 $students = new Student();
 
@@ -14,7 +16,7 @@ $tableToQuery = 't_moyenne_sql';
 $students = $students->getStudentsIdentities($tableToQuery);
 
 #Exclude columns to display
-$preparating = new PreparatingMail(['NOM', 'PRENOM', 'POSTNOM', 'ID', 'G.', 'MATRICULE']);
+$preparating = new PreparatingMail(array('NOM', 'PRENOM', 'POSTNOM', 'ID', 'G.', 'MATRICULE'));
 
 #Title of mail
 $subject = 'Moyenne SQL';
@@ -28,9 +30,10 @@ try{
     $sendMail->setFrom('20kk090@esisalama.org', 'Moyenne L3 AS');
     //$sendMail->addReplyTo('20kk090@esisalama.org');
 
+    $start = TimeRunning::getTime();
+
     for ($idStudent=0; $idStudent < sizeof($students); $idStudent++) {
 
-        if ($idStudent == 57 || $idStudent == 56 ) {
             #Creat table of one student
             $html = $preparating->toHTML($students[$idStudent], $students[$idStudent]);
             $mail = $preparating->toMail($students[$idStudent]->MATRICULE);
@@ -39,14 +42,16 @@ try{
             if ($mail) {
                 $sendMail->addAddress($mail);
                 $sendMail->Setcontent($subject, $html);
-                $sendMail->send();
+                //$sendMail->send();
                 $sendMail->clearAddresses();
             }
-        }
             
     }
 
-    echo "Mails envoyé!";
+    $end = TimeRunning::getTime();
+    $runningTime = TimeRunning::getTotalTime($start, $end);
+
+    echo "Mails envoyé en {$runningTime}";
 
 } catch(Exception $e) {
     echo "Erreur: Envoie {$sendMail->ErrorInfo}";

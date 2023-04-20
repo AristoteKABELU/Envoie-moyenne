@@ -35,8 +35,8 @@ HTML;
     return $tableau."</table>";
     }  
 
-    public function toMail(string $matricule){
-        if (!empty($matricule)) {
+    public function toMail(?string $matricule){
+        if (isset($matricule)) {
             $matricule.='@esisalama.org';
             
             return $matricule;
